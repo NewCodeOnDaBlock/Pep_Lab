@@ -33,7 +33,7 @@ export default function ProductsPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.15 }}
-            className="text-[#64748b] max-w-md mx-auto"
+            className="text-[#64748b] max-w-md mx-auto text-base"
           >
             Third-party verified. Lyophilized. Certificate of Analysis with every shipment.
           </motion.p>
@@ -41,16 +41,16 @@ export default function ProductsPage() {
       </section>
 
       {/* Research disclaimer */}
-      <div className="bg-amber-50 border-b border-amber-200 px-6 py-3">
-        <p className="max-w-7xl mx-auto text-xs text-amber-800 text-center">
+      <div className="bg-amber-50 border-b border-amber-200 px-6 py-3.5">
+        <p className="max-w-7xl mx-auto text-xs text-amber-800 text-center leading-relaxed">
           All products are for <strong>in vitro research and preclinical studies only</strong>. Not for human consumption, therapeutic, or veterinary use.
           By purchasing, you confirm you are a qualified researcher and are 18+.
         </p>
       </div>
 
-      {/* Grid */}
-      <section className="bg-white py-14 px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Product grid */}
+      <section className="bg-white py-16 px-6 md:px-10">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
           {products.map((p, i) => (
             <ProductCard key={p.id} product={p} index={i} />
           ))}

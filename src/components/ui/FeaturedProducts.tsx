@@ -7,8 +7,8 @@ export default function FeaturedProducts() {
   const featured = products.filter((p) => p.featured && p.id !== "wolverine-stack");
 
   return (
-    <section className="bg-white py-24 px-6">
-      <div className="max-w-7xl mx-auto">
+    <section className="bg-white py-24 px-6 md:px-10">
+      <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -26,7 +26,7 @@ export default function FeaturedProducts() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {featured.map((product, i) => (
             <ProductCard key={product.id} product={product} index={i} />
           ))}
