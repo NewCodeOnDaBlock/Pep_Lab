@@ -1,0 +1,43 @@
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build]
+  command   = "npm run build"
+  publish   = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+[functions]
+  directory         = "netlify/functions"
+  node_bundler      = "esbuild"
+  included_files    = ["netlify/functions/**"]
+
+# Headers applied to every route
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options        = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy        = "strict-origin-when-cross-origin"
+    Permissions-Policy     = "camera=(), microphone=(), geolocation=()"
+
+# Cache immutable Next.js assets forever
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Never cache HTML pages
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Redirect bare www → non-www (update to your domain)
+# [[redirects]]
+#   from   = "https://www.peplab.com/*"
+#   to     = "https://peplab.com/:splat"
+#   status = 301
+#   force  = true
