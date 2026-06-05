@@ -6,7 +6,8 @@
       "Bash(bash)",
       "Bash(ls /Users/raden.mantuano/Desktop/pep-build/src/app/)",
       "mcp__Claude_Preview__preview_start",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }

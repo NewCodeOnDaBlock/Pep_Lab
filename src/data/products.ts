@@ -25,7 +25,8 @@ export interface Product {
   color: {
     primary: string;
     secondary: string;
-    glow: string;
+    light: string;
+    border: string;
   };
   badge?: string;
 }
@@ -72,9 +73,10 @@ This product is supplied for research purposes only and is not intended for huma
       "Musculoskeletal Research",
     ],
     color: {
-      primary: "#00d4ff",
-      secondary: "#0066cc",
-      glow: "rgba(0, 212, 255, 0.3)",
+      primary: "#2563eb",
+      secondary: "#1d4ed8",
+      light: "#eff6ff",
+      border: "#bfdbfe",
     },
     badge: "BESTSELLER",
   },
@@ -119,9 +121,10 @@ This product is supplied for in vitro and preclinical research purposes only and
       "Cardiac Research",
     ],
     color: {
-      primary: "#a855f7",
-      secondary: "#7c3aed",
-      glow: "rgba(168, 85, 247, 0.3)",
+      primary: "#7c3aed",
+      secondary: "#6d28d9",
+      light: "#f5f3ff",
+      border: "#ddd6fe",
     },
     badge: "NEW BATCH",
   },
@@ -165,9 +168,10 @@ Bundle pricing represents a significant saving versus purchasing each peptide in
       "Preclinical Combination Studies",
     ],
     color: {
-      primary: "#f59e0b",
-      secondary: "#ef4444",
-      glow: "rgba(245, 158, 11, 0.3)",
+      primary: "#d97706",
+      secondary: "#b45309",
+      light: "#fffbeb",
+      border: "#fde68a",
     },
     badge: "BEST VALUE",
   },
