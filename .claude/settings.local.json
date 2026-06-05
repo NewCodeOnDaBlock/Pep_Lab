@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls /usr/local/bin/ 2>/dev/null | grep -i node; ls /opt/homebrew/bin/ 2>/dev/null | grep -i node; ls /usr/bin/ 2>/dev/null | grep -i node)",
+      "Bash(curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh)",
+      "Bash(bash)",
+      "Bash(ls /Users/raden.mantuano/Desktop/pep-build/src/app/)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(git add *)"
+    ]
+  }
+}
