@@ -1,76 +1,90 @@
 import Link from "next/link";
-import { Microscope } from "lucide-react";
 
-const links = {
+const COLS = {
   Products: [
-    { href: "/products/bpc-157", label: "BPC-157" },
-    { href: "/products/tb-500", label: "TB-500" },
+    { href: "/products/bpc-157",       label: "BPC-157" },
+    { href: "/products/tb-500",        label: "TB-500" },
     { href: "/products/wolverine-stack", label: "Wolverine Stack" },
-    { href: "/products", label: "All Products" },
+    { href: "/products",               label: "All Products" },
   ],
   Research: [
-    { href: "/about", label: "About PepLab" },
-    { href: "/about#methodology", label: "Our Methodology" },
-    { href: "/about#coa", label: "Certificate of Analysis" },
+    { href: "/guides/bpc-157-vs-tb-500",                    label: "BPC-157 vs. TB-500" },
+    { href: "/guides/storing-handling-research-peptides",   label: "Storage & Handling" },
+    { href: "/guides/understanding-certificates-of-analysis", label: "Reading a CoA" },
+    { href: "/guides",                                       label: "All Guides" },
+  ],
+  Company: [
+    { href: "/about",               label: "About PepLab" },
+    { href: "/about#coa",           label: "Certificate of Analysis" },
+    { href: "/legal/disclaimer",    label: "Research Disclaimer" },
+    { href: "/legal/shipping",      label: "Shipping Policy" },
   ],
   Legal: [
-    { href: "/legal/terms", label: "Terms of Service" },
+    { href: "/legal/terms",   label: "Terms of Service" },
     { href: "/legal/privacy", label: "Privacy Policy" },
-    { href: "/legal/disclaimer", label: "Research Disclaimer" },
-    { href: "/legal/shipping", label: "Shipping Policy" },
   ],
 };
 
 export default function Footer() {
   return (
-    <footer className="bg-[#f8f9fc] border-t border-[#e2e8f0] pt-16 pb-10 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-          {/* Brand */}
-          <div className="space-y-4">
-            <Link href="/" className="inline-flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#2563eb] flex items-center justify-center">
-                <Microscope className="text-white" style={{ width: 16, height: 16 }} />
-              </div>
-              <span className="font-bold text-[#0f172a]" style={{ fontFamily: "var(--font-orbitron)", fontSize: 15 }}>
-                PEP<span className="text-[#2563eb]">LAB</span>
-              </span>
-            </Link>
-            <p className="text-sm text-[#64748b] leading-relaxed max-w-xs">
-              Premium research peptides for in vitro and preclinical use. All products are for research purposes only.
-            </p>
-          </div>
+    <footer style={{ background: "var(--bg2)", borderTop: "1px solid var(--border)" }}>
+      <div className="con-lg px-6" style={{ paddingTop: 48, paddingBottom: 20 }}>
 
-          {/* Link columns */}
-          {Object.entries(links).map(([category, items]) => (
+        {/* Links grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+            gap: "32px 24px",
+            paddingBottom: 40,
+            borderBottom: "1px solid var(--border)",
+          }}
+        >
+          {Object.entries(COLS).map(([category, links]) => (
             <div key={category}>
-              <h4 className="text-xs font-semibold text-[#0f172a] tracking-widest uppercase mb-4">
+              <p
+                style={{
+                  fontSize: 11, fontWeight: 600, color: "var(--t1)",
+                  textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 14,
+                }}
+              >
                 {category}
-              </h4>
-              <ul className="space-y-2.5">
-                {items.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="text-sm text-[#64748b] hover:text-[#2563eb] transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              </p>
+              {links.map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className="footer-link"
+                >
+                  {l.label}
+                </Link>
+              ))}
             </div>
           ))}
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-[#e2e8f0] pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-[#94a3b8]">
-            © {new Date().getFullYear()} PepLab Research. All rights reserved.
+        {/* Bottom row */}
+        <div
+          style={{
+            paddingTop: 20,
+            display: "flex", flexWrap: "wrap", alignItems: "center",
+            justifyContent: "space-between", gap: 12,
+          }}
+        >
+          <p style={{ fontSize: 12, color: "var(--t3)" }}>
+            Copyright © {new Date().getFullYear()} PepLab Research. All rights reserved.
           </p>
-          <div className="text-xs text-center text-amber-700 bg-amber-50 border border-amber-200 px-4 py-2 rounded-lg max-w-md">
-            FOR RESEARCH USE ONLY — Not for human or veterinary use. Must be 18+.
-          </div>
+          <p
+            style={{
+              fontSize: 11, maxWidth: 480, textAlign: "right",
+              background: "rgba(217,119,6,0.06)",
+              border: "1px solid rgba(217,119,6,0.18)",
+              color: "#92400e",
+              padding: "6px 12px", borderRadius: 6,
+            }}
+          >
+            FOR RESEARCH USE ONLY — Not for human consumption or therapeutic use. Must be 18+.
+          </p>
         </div>
       </div>
     </footer>

@@ -1,99 +1,231 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────
+   Apple Design System — exact token match
+───────────────────────────────────────────── */
 :root {
-  --bg: #ffffff;
-  --bg-soft: #f8f9fc;
-  --bg-muted: #f1f4f9;
-  --border: #e2e8f0;
-  --border-strong: #cbd5e1;
-  --text: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
-  --blue: #2563eb;
-  --blue-light: #eff6ff;
-  --blue-mid: #dbeafe;
-  --purple: #7c3aed;
-  --purple-light: #f5f3ff;
-  --amber: #d97706;
-  --amber-light: #fffbeb;
-  --red-soft: #fef2f2;
-  --red-border: #fecaca;
-  --red-text: #b91c1c;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 6px rgba(0,0,0,0.04);
-  --shadow-lg: 0 10px 32px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
-  --shadow-xl: 0 20px 48px rgba(0,0,0,0.10), 0 8px 20px rgba(0,0,0,0.06);
+  /* Typography colors */
+  --t1:  #1d1d1f;   /* primary text  */
+  --t2:  #6e6e73;   /* secondary     */
+  --t3:  #86868b;   /* tertiary      */
+  --t4:  #ababab;   /* quaternary    */
+
+  /* Backgrounds */
+  --bg:  #ffffff;
+  --bg2: #f5f5f7;   /* section alt   */
+  --bg3: #e8e8ed;   /* medium gray   */
+  --bg-dark: #000000;
+
+  /* Accent */
+  --blue:        #0071e3;
+  --blue-hover:  #0077ed;
+  --blue-press:  #006edb;
+
+  /* Border */
+  --border: rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.16);
 }
 
-* { box-sizing: border-box; padding: 0; margin: 0; }
-
+/* ─── Reset ───────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-
 body {
   background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  color: var(--t1);
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.529;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-soft); }
-::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+/* Minimal scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 2px; }
 
-/* Cards */
-.card {
-  background: #ffffff;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-  border-radius: 16px;
-}
-.card-hover {
-  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
-}
-.card-hover:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-3px);
+/* ─── Apple Typography Scale ──────────────── */
+
+/* 80–96px — hero headline */
+.t-display {
+  font-size: clamp(48px, 7vw, 96px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+  color: var(--t1);
 }
 
-/* Research badge — subtle amber */
-.research-badge {
-  background: var(--red-soft);
-  border: 1px solid var(--red-border);
-  color: var(--red-text);
+/* 56–72px — section headline */
+.t-headline {
+  font-size: clamp(36px, 4.8vw, 72px);
+  font-weight: 600;
+  line-height: 1.07;
+  letter-spacing: -0.01em;
+  color: var(--t1);
 }
 
-/* Dot grid background for hero only */
-.dot-grid {
-  background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
-  background-size: 28px 28px;
+/* 28–40px — intro callout */
+.t-callout {
+  font-size: clamp(24px, 2.8vw, 40px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.008em;
+  color: var(--t1);
 }
 
-/* Section alternating */
-.section-soft { background: var(--bg-soft); }
-.section-white { background: #ffffff; }
+/* 19–28px — subhead / description */
+.t-subhead {
+  font-size: clamp(17px, 2.2vw, 28px);
+  font-weight: 400;
+  line-height: 1.381;
+  color: var(--t2);
+}
 
-/* Divider line */
-.divider { border-top: 1px solid var(--border); }
+/* 17px — standard body */
+.t-body   { font-size: 17px; font-weight: 400; line-height: 1.529; color: var(--t1); }
+.t-body-2 { font-size: 17px; font-weight: 400; line-height: 1.529; color: var(--t2); }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+/* 12px — caption / nav */
+.t-caption { font-size: 12px; font-weight: 400; color: var(--t3); line-height: 1.33; }
+.t-label   { font-size: 12px; font-weight: 500; color: var(--t2); letter-spacing: 0.02em; text-transform: uppercase; }
+
+/* ─── Apple Buttons ───────────────────────── */
+
+/* Filled blue pill */
+.a-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 22px;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 980px;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1;
+  text-decoration: none;
+  transition: background 0.18s ease;
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+}
+.a-btn:hover  { background: var(--blue-hover); }
+.a-btn:active { background: var(--blue-press); }
+
+/* Outlined blue pill */
+.a-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 11px 21px;
+  background: transparent;
+  color: var(--blue);
+  border: 1.5px solid var(--blue);
+  border-radius: 980px;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1;
+  text-decoration: none;
+  transition: background 0.18s ease, color 0.18s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.a-btn-ghost:hover  { background: var(--blue); color: #fff; }
+
+/* Dark filled pill */
+.a-btn-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 22px;
+  background: var(--t1);
+  color: #fff;
+  border-radius: 980px;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1;
+  text-decoration: none;
+  transition: opacity 0.18s ease;
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+}
+.a-btn-dark:hover { opacity: 0.85; }
+
+/* White outlined (for dark sections) */
+.a-btn-white {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 11px 21px;
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  border-radius: 980px;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1;
+  text-decoration: none;
+  transition: border-color 0.18s ease, background 0.18s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.a-btn-white:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+
+/* Link (chevron) style — "Learn more ›" */
+.a-link {
+  color: var(--blue);
+  font-size: 17px;
+  font-weight: 400;
+  text-decoration: none;
+}
+.a-link:hover { text-decoration: underline; }
+.a-link-sm { font-size: 14px; }
+
+/* ─── Section helpers ─────────────────────── */
+.s-white { background: var(--bg);  }
+.s-gray  { background: var(--bg2); }
+.s-dark  { background: var(--bg-dark); color: #f5f5f7; }
+
+/* Max-width containers */
+.con-sm  { max-width: 692px;  margin-inline: auto; }   /* narrow copy */
+.con-md  { max-width: 980px;  margin-inline: auto; }   /* standard  */
+.con-lg  { max-width: 1200px; margin-inline: auto; }   /* wide      */
+
+/* ─── Divider ─────────────────────────────── */
+.a-divider { border-top: 1px solid var(--border); }
+
+/* ─── Animations ──────────────────────────── */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-14px); }
 }
 @keyframes spin-slow {
-  from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-@keyframes pulse-soft {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.04); }
-}
-@keyframes fade-in-up {
+@keyframes fade-up {
   from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
-.animate-float { animation: float 4s ease-in-out infinite; }
-.animate-spin-slow { animation: spin-slow 14s linear infinite; }
-.animate-pulse-soft { animation: pulse-soft 3s ease-in-out infinite; }
+/* Footer links */
+.footer-link {
+  display: block;
+  color: var(--t2);
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 1;
+  padding: 4px 0;
+  transition: color 0.15s;
+}
+.footer-link:hover { color: var(--t1); }
+
+.anim-float   { animation: float-y  5s ease-in-out infinite; }
+.anim-spin    { animation: spin-slow 22s linear infinite; }
+.anim-fade-up { animation: fade-up 0.7s cubic-bezier(0.22,1,0.36,1) both; }

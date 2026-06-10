@@ -1,6 +1,6 @@
 import Footer from "@/components/layout/Footer";
 
-export const metadata = { title: "Terms of Service | PepLab Research" };
+export const metadata = { title: "Terms of Service", alternates: { canonical: "/legal/terms" }, robots: { index: false, follow: false } };
 
 export default function TermsPage() {
   return (

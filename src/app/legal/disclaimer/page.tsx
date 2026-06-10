@@ -1,8 +1,6 @@
 import Footer from "@/components/layout/Footer";
 
-export const metadata = {
-  title: "Research Disclaimer | PepLab Research",
-};
+export const metadata = { title: "Research Disclaimer", alternates: { canonical: "/legal/disclaimer" }, robots: { index: false, follow: false } };
 
 export default function DisclaimerPage() {
   return (

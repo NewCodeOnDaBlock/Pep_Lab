@@ -1,17 +1,19 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ShoppingCart, Shield, FlaskConical, Zap, ChevronDown, ChevronUp, ArrowLeft, CheckCircle2, Truck } from "lucide-react";
+import { ShoppingCart, Shield, FlaskConical, Zap, ChevronDown, ChevronUp, ArrowLeft, CheckCircle2, Truck, BookOpen } from "lucide-react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useCartStore } from "@/store/cartStore";
 import type { Product } from "@/data/products";
 import { products } from "@/data/products";
 import ProductCard from "@/components/ui/ProductCard";
+import GuideCard from "@/components/ui/GuideCard";
+import type { Guide } from "@/data/guides";
 
 const MoleculeOrb = dynamic(() => import("@/components/3d/MoleculeOrb"), { ssr: false });
 
-export default function ProductDetail({ product }: { product: Product }) {
+export default function ProductDetail({ product, relatedGuides = [] }: { product: Product; relatedGuides?: Guide[] }) {
   const [qty, setQty] = useState(1);
   const [activeTab, setActiveTab] = useState<"overview" | "specs" | "research">("overview");
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
@@ -271,7 +273,7 @@ export default function ProductDetail({ product }: { product: Product }) {
         </div>
       </section>
 
-      {/* Related */}
+      {/* Related products (stacks) */}
       {related.length > 0 && (
         <section className="bg-white border-t border-[#e2e8f0] px-6 py-16">
           <div className="max-w-7xl mx-auto">
@@ -280,6 +282,26 @@ export default function ProductDetail({ product }: { product: Product }) {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-3xl">
               {related.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Related guides */}
+      {relatedGuides.length > 0 && (
+        <section className="bg-[#f8f9fc] border-t border-[#e2e8f0] px-6 py-16">
+          <div className="max-w-7xl mx-auto space-y-8">
+            <div className="space-y-2">
+              <span className="inline-flex items-center gap-2 text-xs font-bold tracking-widest text-[#2563eb] uppercase">
+                <BookOpen className="w-3.5 h-3.5" />
+                Research reading
+              </span>
+              <h2 className="text-2xl font-black text-[#0f172a]" style={{ fontFamily: "var(--font-orbitron)" }}>
+                Guides for this peptide
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              {relatedGuides.map((g, i) => <GuideCard key={g.slug} guide={g} index={i} />)}
             </div>
           </div>
         </section>

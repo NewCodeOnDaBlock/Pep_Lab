@@ -1,27 +1,51 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Orbitron, Space_Grotesk } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import CartDrawer from "@/components/shop/CartDrawer";
 import ResearchBanner from "@/components/layout/ResearchBanner";
+import JsonLd from "@/components/seo/JsonLd";
+import { SITE_NAME, SITE_DESCRIPTION, SITE_URL, organizationSchema, websiteSchema } from "@/lib/seo";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
-const orbitron = Orbitron({ variable: "--font-orbitron", subsets: ["latin"], weight: ["400", "600", "700", "900"] });
-const spaceGrotesk = Space_Grotesk({ variable: "--font-space", subsets: ["latin"] });
+const inter = Inter({
+  variable: "--font-sans",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
+const mono = Geist_Mono({ variable: "--font-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "PepLab Research | Premium Research Peptides",
-  description: "High-purity research peptides for in vitro and preclinical studies. BPC-157, TB-500, and more. For research use only.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} — Premium Research Peptides`,
+    template: `%s — ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  keywords: ["research peptides", "BPC-157", "TB-500", "buy research peptides online", "lyophilized peptides"],
+  authors: [{ name: SITE_NAME }],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} — Premium Research Peptides`,
+    description: SITE_DESCRIPTION,
+  },
+  twitter: { card: "summary_large_image", title: `${SITE_NAME} — Premium Research Peptides`, description: SITE_DESCRIPTION },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${spaceGrotesk.variable}`}>
-      <body className="bg-white text-[#0f172a] min-h-screen antialiased">
+    <html lang="en" className={`${inter.variable} ${mono.variable}`}>
+      <body className="antialiased">
+        <JsonLd data={[organizationSchema(), websiteSchema()]} />
         <ResearchBanner />
         <Navbar />
-        <main className="pt-16">{children}</main>
+        <main className="pt-[44px]">{children}</main>
         <CartDrawer />
       </body>
     </html>

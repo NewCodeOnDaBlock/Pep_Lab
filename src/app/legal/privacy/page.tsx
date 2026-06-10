@@ -1,6 +1,6 @@
 import Footer from "@/components/layout/Footer";
 
-export const metadata = { title: "Privacy Policy | PepLab Research" };
+export const metadata = { title: "Privacy Policy", alternates: { canonical: "/legal/privacy" }, robots: { index: false, follow: false } };
 
 export default function PrivacyPage() {
   return (

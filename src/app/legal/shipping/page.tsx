@@ -1,6 +1,6 @@
 import Footer from "@/components/layout/Footer";
 
-export const metadata = { title: "Shipping Policy | PepLab Research" };
+export const metadata = { title: "Shipping Policy", alternates: { canonical: "/legal/shipping" }, openGraph: { url: "/legal/shipping" } };
 
 export default function ShippingPage() {
   return (

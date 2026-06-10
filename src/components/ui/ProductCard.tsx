@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ShoppingCart, ArrowRight, Zap, CheckCircle2 } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
 import type { Product } from "@/data/products";
 
@@ -16,137 +16,160 @@ export default function ProductCard({ product, index = 0 }: { product: Product; 
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, margin: "0px 0px -40px 0px" }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
-      className="group h-full"
     >
-      <Link href={`/products/${product.slug}`} className="block h-full">
-        <div className="bg-white border border-[#e2e8f0] rounded-2xl overflow-hidden h-full flex flex-col transition-all duration-300 hover:shadow-[0_16px_48px_rgba(0,0,0,0.12)] hover:-translate-y-1.5 hover:border-transparent cursor-pointer">
-
-          {/* Accent top bar */}
-          <div className="h-1.5 w-full shrink-0" style={{ background: `linear-gradient(90deg, ${product.color.primary}, ${product.color.secondary})` }} />
-
-          {/* Badge */}
-          <div className="px-6 pt-5 pb-0 flex justify-end min-h-[36px]">
+      <Link href={`/products/${product.slug}`} style={{ display: "block", textDecoration: "none" }}>
+        <div
+          style={{
+            background: "var(--bg2)",
+            borderRadius: 20,
+            overflow: "hidden",
+            display: "flex", flexDirection: "column",
+            height: "100%",
+            transition: "transform 0.22s ease, box-shadow 0.22s ease",
+            cursor: "pointer",
+          }}
+          onMouseEnter={(e) => {
+            const el = e.currentTarget as HTMLDivElement;
+            el.style.transform = "translateY(-3px)";
+            el.style.boxShadow = "0 12px 40px rgba(0,0,0,0.1)";
+          }}
+          onMouseLeave={(e) => {
+            const el = e.currentTarget as HTMLDivElement;
+            el.style.transform = "translateY(0)";
+            el.style.boxShadow = "none";
+          }}
+        >
+          {/* Visual area — colored orb placeholder */}
+          <div
+            style={{
+              position: "relative",
+              background: product.color.light,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              padding: "40px 32px",
+              minHeight: 220,
+            }}
+          >
             {product.badge && (
               <span
-                className="inline-block px-3 py-1.5 rounded-lg text-[11px] font-bold tracking-widest"
-                style={{ background: product.color.light, color: product.color.primary, border: `1px solid ${product.color.border}`, fontFamily: "var(--font-orbitron)" }}
+                style={{
+                  position: "absolute", top: 14, right: 14,
+                  background: "rgba(255,255,255,0.85)",
+                  backdropFilter: "blur(4px)",
+                  color: product.color.primary,
+                  fontSize: 10, fontWeight: 600, letterSpacing: "0.08em",
+                  padding: "4px 10px", borderRadius: 6,
+                  textTransform: "uppercase",
+                }}
               >
                 {product.badge}
               </span>
             )}
-          </div>
 
-          {/* Visual orb */}
-          <div className="flex items-center justify-center py-8">
-            <div className="relative w-32 h-32">
+            {/* Simple orb visual */}
+            <div style={{ position: "relative", width: 110, height: 110 }}>
               <motion.div
-                className="absolute inset-0 rounded-full"
-                style={{ background: `radial-gradient(circle, ${product.color.light} 0%, transparent 70%)` }}
-                animate={{ scale: [1, 1.12, 1] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+                style={{
+                  position: "absolute", inset: 0, borderRadius: "50%",
+                  background: `radial-gradient(circle, ${product.color.border} 0%, transparent 70%)`,
+                }}
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 3.5, repeat: Infinity }}
               />
               <motion.div
-                className="absolute inset-4 rounded-full border-2"
-                style={{ borderColor: product.color.border, borderStyle: "dashed" }}
+                style={{
+                  position: "absolute", inset: 12, borderRadius: "50%",
+                  border: `1px dashed ${product.color.border}`,
+                }}
                 animate={{ rotate: 360 }}
-                transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
               />
               <div
-                className="absolute inset-6 rounded-full flex items-center justify-center"
-                style={{ background: `linear-gradient(135deg, ${product.color.light}, ${product.color.border})` }}
+                style={{
+                  position: "absolute", inset: 24, borderRadius: "50%",
+                  background: "#fff",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 13, fontWeight: 600, color: product.color.primary,
+                  boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+                }}
               >
-                <span
-                  className="font-bold text-xs tracking-wider"
-                  style={{ color: product.color.primary, fontFamily: "var(--font-orbitron)" }}
-                >
-                  {product.id === "wolverine-stack" ? "W" : product.shortName.split("-")[0]}
-                </span>
+                {product.id === "wolverine-stack" ? "W" : product.shortName.split("-")[0]}
               </div>
             </div>
           </div>
 
-          {/* Content */}
-          <div className="px-8 pb-8 flex flex-col flex-1 gap-5">
-
-            {/* Name + subtitle */}
+          {/* Text area */}
+          <div style={{ padding: "20px 22px 24px", display: "flex", flexDirection: "column", flex: 1, gap: 12 }}>
             <div>
-              <h3 className="font-bold text-xl text-[#0f172a] leading-tight" style={{ fontFamily: "var(--font-orbitron)" }}>
+              <p style={{ fontSize: 11, color: "var(--t3)", textTransform: "uppercase", letterSpacing: "0.07em", fontWeight: 500, marginBottom: 4 }}>
+                {product.category}
+              </p>
+              <h3 style={{ fontSize: 19, fontWeight: 600, color: "var(--t1)", letterSpacing: "-0.01em", lineHeight: 1.2 }}>
                 {product.name}
               </h3>
-              <p className="text-sm text-[#94a3b8] mt-1 font-medium">{product.subtitle}</p>
+              <p style={{ fontSize: 14, color: "var(--t2)", marginTop: 3 }}>{product.subtitle}</p>
             </div>
 
-            {/* Specs chips */}
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { label: "Concentration", value: product.concentration },
-                { label: "Purity", value: product.purity },
-              ].map((spec) => (
+            <p style={{ fontSize: 14, color: "var(--t3)", lineHeight: 1.5, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+              {product.description}
+            </p>
+
+            {/* Spec chips */}
+            <div style={{ display: "flex", gap: 8 }}>
+              {[{ k: "Purity", v: product.purity }, { k: "Conc.", v: product.concentration }].map((s) => (
                 <div
-                  key={spec.label}
-                  className="p-3 rounded-xl text-center"
-                  style={{ background: product.color.light, border: `1px solid ${product.color.border}` }}
+                  key={s.k}
+                  style={{
+                    flex: 1, padding: "7px 10px", borderRadius: 10, textAlign: "center",
+                    background: "#fff",
+                  }}
                 >
-                  <div className="text-[11px] text-[#94a3b8] font-semibold uppercase tracking-wider">{spec.label}</div>
-                  <div className="text-[#0f172a] text-sm font-bold mt-1">{spec.value}</div>
+                  <p style={{ fontSize: 10, color: "var(--t3)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{s.k}</p>
+                  <p style={{ fontSize: 12, fontWeight: 600, color: product.color.primary, marginTop: 2 }}>{s.v}</p>
                 </div>
               ))}
             </div>
 
-            {/* Description */}
-            <p className="text-sm text-[#64748b] line-clamp-2 leading-relaxed">{product.description}</p>
+            {/* Spacer */}
+            <div style={{ flex: 1 }} />
 
-            {/* Stack hint */}
-            {product.stacksWith && (
-              <div className="flex items-center gap-2 text-sm text-[#64748b]">
-                <Zap className="w-4 h-4 text-[#d97706] shrink-0" />
-                <span>Stacks with {product.stacksWith.join(", ")}</span>
+            {/* Price + CTA */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: 12, borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+              <div>
+                <p style={{ fontSize: 21, fontWeight: 600, color: "var(--t1)", letterSpacing: "-0.015em", lineHeight: 1 }}>
+                  ${product.price.toFixed(2)}
+                </p>
+                {product.originalPrice && (
+                  <p style={{ fontSize: 12, color: "var(--t3)", textDecoration: "line-through", marginTop: 2 }}>
+                    ${product.originalPrice.toFixed(2)}
+                  </p>
+                )}
               </div>
-            )}
-
-            {/* Spacer pushes price+CTA to bottom */}
-            <div className="flex-1" />
-
-            {/* Divider */}
-            <div className="border-t border-[#f1f4f9]" />
-
-            {/* Price */}
-            <div className="flex items-baseline gap-2.5">
-              <span className="text-3xl font-black text-[#0f172a]">${product.price.toFixed(2)}</span>
-              {product.originalPrice && (
-                <span className="text-base text-[#94a3b8] line-through">${product.originalPrice.toFixed(2)}</span>
-              )}
-            </div>
-
-            {/* CTA buttons */}
-            <div className="flex items-center gap-3">
-              <motion.button
-                whileTap={{ scale: 0.93 }}
-                onClick={handleAddToCart}
-                className="flex items-center justify-center p-3.5 rounded-xl border border-[#e2e8f0] hover:border-[#2563eb] hover:bg-[#eff6ff] transition-all duration-200 shrink-0"
-                aria-label="Add to cart"
-              >
-                <ShoppingCart className="w-5 h-5 text-[#475569]" />
-              </motion.button>
-              <button
-                className="flex-1 flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl text-sm font-bold text-white transition-all duration-200 hover:opacity-90"
-                style={{ background: `linear-gradient(135deg, ${product.color.primary}, ${product.color.secondary})` }}
-              >
-                View Product <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* In-stock */}
-            {product.inStock && (
-              <div className="flex items-center gap-2 text-sm text-emerald-600 font-medium">
-                <CheckCircle2 className="w-4 h-4 shrink-0" />
-                In stock — ships within 48 hrs
+              <div style={{ display: "flex", gap: 8 }}>
+                <button
+                  onClick={handleAddToCart}
+                  style={{
+                    padding: "8px 16px", borderRadius: 980,
+                    background: product.color.primary, color: "#fff",
+                    fontSize: 13, fontWeight: 400, border: "none", cursor: "pointer",
+                  }}
+                >
+                  Add
+                </button>
+                <div
+                  style={{
+                    width: 34, height: 34, borderRadius: "50%",
+                    background: "rgba(0,0,0,0.04)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                  }}
+                >
+                  <ChevronRight style={{ width: 15, height: 15, color: "var(--t2)" }} />
+                </div>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </Link>

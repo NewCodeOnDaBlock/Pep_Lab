@@ -1,16 +1,22 @@
-import HeroSection from "@/components/ui/HeroSection";
-import FeaturedProducts from "@/components/ui/FeaturedProducts";
+import HeroSection           from "@/components/ui/HeroSection";
+import StatsSection          from "@/components/ui/StatsSection";
+import FeaturedProducts      from "@/components/ui/FeaturedProducts";
+import BenefitsSection       from "@/components/ui/BenefitsSection";
 import WolverineStackSection from "@/components/ui/WolverineStackSection";
-import StatsSection from "@/components/ui/StatsSection";
-import TrustSection from "@/components/ui/TrustSection";
-import Footer from "@/components/layout/Footer";
+import TrustSection          from "@/components/ui/TrustSection";
+import Footer                from "@/components/layout/Footer";
+import { getProducts }       from "@/data/products";
 
-export default function HomePage() {
+export default async function HomePage() {
+  // Fetches from Sanity when configured, falls back to static data
+  const products = await getProducts();
+
   return (
     <>
       <HeroSection />
       <StatsSection />
-      <FeaturedProducts />
+      <FeaturedProducts products={products} />
+      <BenefitsSection />
       <WolverineStackSection />
       <TrustSection />
       <Footer />

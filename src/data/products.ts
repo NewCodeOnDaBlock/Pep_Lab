@@ -179,3 +179,59 @@ Bundle pricing represents a significant saving versus purchasing each peptide in
 
 export const getProductBySlug = (slug: string) =>
   products.find((p) => p.slug === slug);
+
+/* ─── Sanity-backed async fetchers ──────────────────────────
+   Returns Sanity data when env vars are configured;
+   falls back to the static array above (local dev / no CMS).
+─────────────────────────────────────────────────────────── */
+export async function getProducts(): Promise<Product[]> {
+  const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+  if (!projectId || projectId.length < 5) return products;
+
+  try {
+    const { sanityClient } = await import("@/sanity/client");
+    const { ALL_PRODUCTS_QUERY, toProduct } = await import("@/sanity/queries");
+    const docs = await sanityClient.fetch(ALL_PRODUCTS_QUERY);
+    if (!Array.isArray(docs) || docs.length === 0) return products;
+    return docs.map(toProduct);
+  } catch (err) {
+    console.warn("Sanity fetch failed, using static products:", err);
+    return products;
+  }
+}
+
+export async function getProductBySlugAsync(slug: string): Promise<Product | undefined> {
+  const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+  if (!projectId || projectId.length < 5) return getProductBySlug(slug);
+
+  try {
+    const { sanityClient } = await import("@/sanity/client");
+    const { PRODUCT_BY_SLUG_QUERY, toProduct } = await import("@/sanity/queries");
+    const doc = await sanityClient.fetch(PRODUCT_BY_SLUG_QUERY, { slug });
+    if (!doc) return getProductBySlug(slug);
+    return toProduct(doc);
+  } catch {
+    return getProductBySlug(slug);
+  }
+}
+
+export const categorySlug = (category: string) =>
+  category
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
+export interface ProductCategory {
+  slug: string;
+  name: string;
+}
+
+export const categories: ProductCategory[] = Array.from(
+  new Map(products.map((p) => [categorySlug(p.category), p.category])).entries()
+).map(([slug, name]) => ({ slug, name }));
+
+export const getCategoryBySlug = (slug: string) =>
+  categories.find((c) => c.slug === slug);
+
+export const getProductsByCategory = (slug: string) =>
+  products.filter((p) => categorySlug(p.category) === slug);
